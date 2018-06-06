@@ -21,6 +21,7 @@ namespace ISD_Trial_Test
 
     abstract class Human
     {
+        [NonSerialized]
         protected Gender gender;
 
         public virtual string Name { get; set; }
@@ -58,8 +59,10 @@ namespace ISD_Trial_Test
         }
     }
 
+
     class Child : Human
     {
+        [NonSerialized]
         private string name;
 
         public override string Name
