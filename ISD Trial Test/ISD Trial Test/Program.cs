@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 namespace ISD_Trial_Test
 {
-    //У них должно быть имя(например, Мария, Александр, Анна); возраст, пол.
-    //У мамы, папы и дочери должно присутствовать поведение "ходить", у мамы и папы - "работать".
     enum Gender
     {
         Male, Female, Other
@@ -65,13 +63,19 @@ namespace ISD_Trial_Test
         [NonSerialized]
         private string name;
 
+        public delegate void Action(string message);
+        public event Action doSomething;
+
         public override string Name
         {
             get { return name; }
             set
             {
                 if (Age > 16)
+                {
                     name = value;
+                        doSomething("name was chenged");
+                }
             }
         }
 
@@ -83,8 +87,14 @@ namespace ISD_Trial_Test
         }
     }
 
+
     class Program
     {
+        private static void ShowAction(string message)
+        {
+            Console.WriteLine(message);
+        }
+
         static void Main(string[] args)
         {
             List<Human> family = new List<Human>();
@@ -120,6 +130,14 @@ namespace ISD_Trial_Test
                 }
                 Console.WriteLine(new string('-', 20));
             }
+
+            Console.WriteLine("passed 17 years");
+
+            baby.doSomething += ShowAction;
+            family[2].Age = 18;
+            family[2].Name = "Supid";
+            Console.WriteLine(family[2].Name);
+
         }
     }
 }
